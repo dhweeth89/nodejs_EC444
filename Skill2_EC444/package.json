@@ -1,0 +1,11 @@
+{
+  "name": "skill2_ec444",
+  "version": "1.0.0",
+  "description": "Using NodeJS and CanvasJS for first time",
+  "main": "demo_http.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shaivya Gupta",
+  "license": "ISC"
+}

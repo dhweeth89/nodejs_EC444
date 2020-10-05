@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+<head>  
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var fbData = [];
+        var amznData = [];
+        var googlData = [];
+        var msftData = [];
+
+        $.get("/data", function(data) {
+
+            for (var i=0; i<data.length; i++)
+            {
+                if (data[i].Stock == "FB")
+                {
+                    fbData.push({
+                        x: data[i].Date,
+                        y: parseFloat(data[i].Closing)
+                    })
+                }
+                else if (data[i].Stock == "AMZN")
+                {
+                    amznData.push({
+                        x: data[i].Date,
+                        y: parseFloat(data[i].Closing)
+                    })
+                }
+                else if (data[i].Stock == "MSFT")
+                {
+                    msftData.push({
+                        x: data[i].Date,
+                        y: parseFloat(data[i].Closing)
+                    })
+                }
+                else if (data[i].Stock == "GOOGL")
+                {
+                    googlData.push({
+                        x: data[i].Date,
+                        y: parseFloat(data[i].Closing)
+                    })
+                }
+            }
+
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnable: true,
+
+                title: {
+                     text: "Company Closing Stocks Per Day",
+                },
+                axisY: {
+		            title: "Closing",
+                },
+                axisX: {
+                    title: "Day Number",
+                    interval: 1
+                },
+                legend: {
+		            cursor:"pointer",
+		            itemclick: toggleDataSeries
+                },
+                data: [
+                
+                {
+                    type: "column",
+		            name: "Microsoft",
+                    legendText: "Microsoft",
+                    color: "green",
+		            showInLegend: true, 
+		            dataPoints: msftData
+                },
+                    
+                {
+                    type: "column",
+		            name: "Amazon",
+                    legendText: "Amazon",
+                    color: "yellow",
+		            showInLegend: true, 
+		            dataPoints: amznData
+                },
+                        
+                {
+                    type: "column",
+		            name: "Facebook",
+                    legendText: "Facebook",
+                    color: "blue",
+		            showInLegend: true, 
+		            dataPoints: fbData
+                },
+
+                {
+                    type: "column",
+		            name: "Google",
+                    legendText: "Google",
+                    color: "red",
+		            showInLegend: true, 
+                    dataPoints: googlData
+                }
+            ]
+
+            });
+            
+            chart.render();
+    
+            
+            function toggleDataSeries(e) {
+	            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		            e.dataSeries.visible = false;
+	            }
+	            else {
+		            e.dataSeries.visible = true;
+	            }
+	            chart.render();
+            }
+        });
+    }
+</script>
+
+</head>
+
+<body>
+    <div id="chartContainer" style="width:100%; height:300px;"></div>
+</body>
+
+</html>
