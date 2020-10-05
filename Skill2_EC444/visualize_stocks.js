@@ -23,7 +23,7 @@ app.get('/data', (req, res) => {
 
 	var data = [];	// Array to hold CSV data
 
-	fs.createReadStream('D:/NodeJS_Programs/csv_files/stocks.csv')	// create readStream from fs(?)
+	fs.createReadStream('./csv_files/stocks.csv')	// create readStream from fs(?)
 	.pipe(csv())						// Pipe data to csv object (inside server object)
 
 	.on('data', (row) => {
